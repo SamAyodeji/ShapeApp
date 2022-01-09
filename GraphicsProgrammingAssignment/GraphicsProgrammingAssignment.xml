@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GraphicsProgrammingAssignment</name>
+    </assembly>
+    <members>
+        <member name="M:GraphicsProgrammingAssignment.Circle.DrawCircle(System.Drawing.Graphics,System.Int32)">
+            <summary>
+            Draw a circle using a radius and fills the interior when fill is on
+            </summary>
+            <param name="g">graphics</param>
+            <param name="radius">radius of circle</param>
+        </member>
+        <member name="M:GraphicsProgrammingAssignment.Circle.#ctor(GraphicsProgrammingAssignment.Shapes)">
+            <summary>
+            This method will parse a given command and outs the required shape on success:
+            </summary>
+            <param name="s">shapes </param>
+        </member>
+        <member name="T:GraphicsProgrammingAssignment.CommandParser">
+            <summary>
+            Declearing variables for Bitmap,Graphics and pictureBox
+            </summary>
+        </member>
+        <member name="M:GraphicsProgrammingAssignment.CommandParser.#ctor(System.Windows.Forms.PictureBox)">
+            <summary>
+            The commandParser method creates a blank bitmap the size as the original
+            and gets a graphics object from the new image
+            </summary>
+            <param name="pictureBox">To refer to the fields of the current class the PictureBox is 
+            used to display graphics from a bitmap</param>
+        </member>
+        <member name="M:GraphicsProgrammingAssignment.CommandParser.draw">
+            <summary>
+            this method trys to use Refresh method to update the picturebox the user draws.
+            </summary>
+        </member>
+        <member name="M:GraphicsProgrammingAssignment.CommandParser.ParsePoint(System.String)">
+            <summary> this method shows a  ParsePoint method  whereby the coordinates entered by 
+            the user are seperated by a comma  using split function if the lenght of points is not
+            equals to 2 it throws an exception if its less
+            </summary>
+            <param name="point">A string containing a number to convert.</param>
+            <returns>The value of x and y coordinates</returns>
+            <exception cref="T:System.Exception">Thrown when one parameter is not equals to 2</exception>
+        </member>
+        <member name="M:GraphicsProgrammingAssignment.CommandParser.ParseTriangle(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GraphicsProgrammingAssignment.CommandParser.display(System.String)">
+            <summary>
+            A method,that run the users command which is  separated by a newline.
+            function to execute a command enterd by the user contained within a string
+            </summary>
+            <param name="input"></param>
+            <param name="userInput">A string containing a number to convert.</param>
+        </member>
+        <member name="F:GraphicsProgrammingAssignment.Form1.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:GraphicsProgrammingAssignment.Form1.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:GraphicsProgrammingAssignment.Form1.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:GraphicsProgrammingAssignment.Line.drawLine(System.Drawing.Graphics,System.Int32,System.Int32)">
+            <summary>
+            Constructor to  Drawline a on the picturebox
+            </summary>
+            <param name="g">graphics</param>
+            <param name="x">frist point of line</param>
+            <param name="y">end point of line</param>
+        </member>
+        <member name="M:GraphicsProgrammingAssignment.Program.Main">
+            <summary>
+            The main entry point for the application.
+            </summary>
+        </member>
+        <member name="T:GraphicsProgrammingAssignment.Rectangle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:GraphicsProgrammingAssignment.Rectangle.drawRectangle(System.Drawing.Graphics,System.Int32,System.Int32)">
+            <summary>
+              Draw a Rectangle using an array of points and fills the interior when fill is on
+            </summary>
+            <param name="g">a graphics class to draw shape to </param>
+            <param name="width">takes width of the rectangle</param>
+            <param name="height">takes the height of the rectangle</param>
+        </member>
+        <member name="M:GraphicsProgrammingAssignment.Rectangle.#ctor(GraphicsProgrammingAssignment.Shapes)">
+            <summary>
+            
+            </summary>
+            <param name="s"></param>
+        </member>
+        <member name="T:GraphicsProgrammingAssignment.Shapes">
+            <summary>
+            The x, y,pen color, solid brush and fill are the properties of the class Shapes 
+            </summary>
+        </member>
+        <member name="M:GraphicsProgrammingAssignment.Triangle.drawTriangle(System.Drawing.Graphics,System.Drawing.Point,System.Drawing.Point,System.Drawing.Point)">
+            <summary>
+             Draw a triangle using an array of points and fills the interior when fill is on 
+            </summary>
+            <param name="g">// Sets g to a graphics object representing the drawing surface of the  
+            control or form g is a member of. </param>
+            <param name="point1">Define  the first point array to draw a triangle:</param>
+            <param name="point2">Define  the second point array to draw a triangle:</param>
+            <param name="point3">Define the third point array to draw a triangle:</param>
+        </member>
+        <member name="M:GraphicsProgrammingAssignment.Triangle.#ctor(GraphicsProgrammingAssignment.Shapes)">
+            <summary>
+            
+            </summary>
+            <param name="s"></param>
+        </member>
+        <member name="T:GraphicsProgrammingAssignment.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:GraphicsProgrammingAssignment.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:GraphicsProgrammingAssignment.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+    </members>
+</doc>
