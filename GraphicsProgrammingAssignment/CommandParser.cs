@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
+using System.Timers;
 using System.Windows.Forms;
 
 namespace GraphicsProgrammingAssignment
@@ -565,5 +567,253 @@ namespace GraphicsProgrammingAssignment
             }
             this.draw();
         }
+        public void flashy (string userInput)
+        {
+            //Split  method on spaces.
+            string[] userInputArray = userInput.Split(new string[] { Environment.NewLine },
+                StringSplitOptions.RemoveEmptyEntries);
+            Shapes draw = new Shapes();
+            draw.x = 0;//initial x-coordinate axis 
+            draw.y = 0;//initial y-coordinate axis
+            draw.color = Pens.Black; //sets default color black 
+
+            for (int i = 0; i < userInputArray.Length; i++)
+            {
+                string[] commandParts = userInputArray[i].Split(' ');
+
+                switch (commandParts[0].ToLower())
+                {
+                    case "circle":
+                        if (commandParts.Length == 3)
+                        {
+                            // Create a position for the circle TryParse coordinates of points using a helper function.
+                            (int, int) point = ParsePoint(commandParts[1]);
+                            if (int.TryParse(commandParts[2], out int radius))
+                            {
+                                new Circle(draw).DrawCircle(g, radius);
+                            }
+
+                            else
+                            {
+                                // therefore if the radius of circle isnt parsed it throws an invalid commmand exception
+                                throw new Exception("Invalid Command Entered, Enter a Valid Command");
+                            }
+                        }
+                        // if the shape has just two arguments the position is not
+                        // included and the current position should be used instead
+
+                        else if (commandParts.Length == 2)
+                        {
+                            if (int.TryParse(commandParts[1], out int radius))
+                            {
+                                new Circle(draw).DrawCircle(g, radius);
+                            }
+
+                            else
+                            {
+                                MessageBox.Show("Invalid Command Entered, Enter a Valid Command");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Invalid parameter Entered, Enter a Valid parameter");
+                        }
+                        break;
+                    //   the shape triangle has three points therefore it needs three arguments parsed
+                    case "triangle":
+                        if (commandParts.Length == 4)
+                        {
+                            // three points are parsed using the helper function using The try catch statement which consists of a try
+                            // which call drawTriangle if the points are 3 
+                            // followed by one  catch clauses and else, which specifies for a different exception.
+                            try
+                            {
+                                Point point1 = ParseTriangle(commandParts[1]);
+                                Point point2 = ParseTriangle(commandParts[2]);
+                                Point point3 = ParseTriangle(commandParts[3]);
+                                new Triangle(draw).drawTriangle(g, point1, point2, point3);
+                            }
+                            catch
+                            {
+                                MessageBox.Show("Invalid coordinate Entered, Enter a Valid coordinates");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Invalid parameter Entered,Enter a valid parameter");
+                        }
+                        break;
+
+                    case "rectangle":
+                        // rectangle can have either three or two arguments
+                        if (commandParts.Length == 3)
+                        {
+                            // parse the width and height and throw an exception if they are invalid 
+                            // Create a position for the rectangle TryParse coordinates of points using a helper function.
+                            if (int.TryParse(commandParts[1], out int x) && int.TryParse(commandParts[2], out int y))
+                                new Rectangle(draw).drawRectangle(g, x, y);
+
+                            else
+                                MessageBox.Show("invalid parameter");
+                        }
+                        else if (commandParts.Length == 2)
+                        {
+                            try
+                            {
+                                var (x, y) = ParsePoint(commandParts[1]);
+                                new Rectangle(draw).drawRectangle(g, x, y);
+                            }
+                            catch
+                            {
+                                MessageBox.Show("Invalid coordinate  enter a valid coordinate");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("invalid parameter enter a valid parameter");
+                        }
+                        break;
+                    // this command that takes an argument for the position for draw to
+                    case "drawto":
+                        if (commandParts.Length == 3)
+                        {
+                            if (int.TryParse(commandParts[1], out int x) && int.TryParse(commandParts[2], out int y))
+                                new Line(draw).drawLine(g, x, y);
+
+
+
+                            else
+                                MessageBox.Show("Invalid parameter, Enter a Valid Parameter");
+                        }
+                        else if (commandParts.Length == 2)
+                        {
+                            try
+                            {
+                                var (x, y) = ParsePoint(commandParts[1]);
+                                new Line(draw).drawLine(g, x, y);
+                            }
+                            catch
+                            {
+                                MessageBox.Show("Invalid coordinate, Enter a Valid coordinate");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("invalid parameter, Enter a Valid Parameter");
+                        }
+
+                        break;
+
+                    case "moveto":
+                        //Moves the shape to the specified coordinates on the screen.
+                        //by parsing the point using the helper function and sets the position to the users moveto input
+                        try
+                        {
+                            (draw.x, draw.y) = ParsePoint(commandParts[1]);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("invalid coordinate, Enter valid coordinates");
+                        }
+                        break;
+                    case "fill":
+                        switch (commandParts[1].ToLower())
+                        {
+                            case "on":  // case Fill shape is on it fills the shape
+                                draw.fill = true;
+                                break;
+                            case "off": // case Fill shape is off 
+                                draw.fill = false;
+                                break;
+                        }
+                        break;
+
+                    case "pen":
+                        switch (commandParts[1].ToLower())
+                        {
+                            //Sets the Pen object to a defined set of color
+                            case "blueyellow":
+                                Pen[] pens2 = { Pens.Blue, Pens.Yellow};
+                                Random random2 = new Random();
+                                int index2 = random2.Next(pens2.Length);
+                                System.Threading.Timer t2 = new System.Threading.Timer
+                                (
+                                  e =>
+                                  {
+                                      draw.color = pens2[index2];
+                                      //this.draw();
+                                  },
+                                  null,
+                                  TimeSpan.Zero,
+                                  TimeSpan.FromSeconds(2)
+
+                                 ); ;
+
+                                Thread.Sleep(20);
+                                break;
+                            case "redgreen":
+
+                                Pen[] pens = { Pens.Red, Pens.Green };
+                                Random random = new Random();
+                                int index = random.Next(pens.Length);
+                                System.Threading.Timer t = new System.Threading.Timer
+                                (
+                                  e =>
+                                  {
+                                      draw.color = pens[index];
+                                      //this.draw();
+                                  },
+                                  null,
+                                  TimeSpan.Zero,
+                                  TimeSpan.FromSeconds(2)
+
+                                 ); ;
+                                 
+                                Thread.Sleep(20);
+                                
+                                break;
+                            case "blackwhite":
+                                Pen[] pens3 = { Pens.White, Pens.Black };
+                                Random random3 = new Random();
+                                int index3 = random3.Next(pens3.Length);
+                                System.Threading.Timer t3 = new System.Threading.Timer
+                                (
+                                  e =>
+                                  {
+                                      draw.color = pens3[index3];
+                                      //this.draw();
+                                  },
+                                  null,
+                                  TimeSpan.Zero,
+                                  TimeSpan.FromSeconds(2)
+
+                                 ); ;
+
+                                Thread.Sleep(20);
+                                break;
+                           
+                            default:
+                                draw.color = Pens.Black;
+                                break;
+                        }
+                        break;
+                    case "clear":
+                        // Clears screen with white background.
+                        g.Clear(System.Drawing.Color.White);
+                        break;
+                    case "reset":
+                        // Resets the location of the coordinates to its initial coordinate.
+                        draw.x = 0;
+                        draw.y = 0;
+                        draw.color = Pens.Black;
+                        break;
+                    default:
+                        MessageBox.Show("invalid Parameter Entered, enter a valid Parameter");
+                        break;
+                }
+            }
+            this.draw();
+        }
+      
     }
 }

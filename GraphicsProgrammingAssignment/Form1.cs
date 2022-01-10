@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace GraphicsProgrammingAssignment
@@ -15,18 +16,50 @@ namespace GraphicsProgrammingAssignment
 
         private void calculateShape(object sender, EventArgs e)
         {
-            commandParser.display(commandText.Text);
+            bool isChecked = false;
+            string option = string.Empty;
+            foreach(RadioButton rdo in groupBox1.Controls.OfType<RadioButton>())
+            {
+                if (rdo.Checked)
+                {
+                    isChecked = true;
+                    option = rdo.Text;
+                    break;
+                }
+            }
+            if (isChecked)
+            {
+                switch (option)
+                {
+                    case "single":
+                        commandParser.parseCommand(commandText.Text);
+                        break;
+                    case "flash":
+                        commandParser.flashy(commandText.Text);
+                        break;
+                    case "loop":
+                        commandParser.displayLoop(commandText.Text);
+                        break;
+                    default:
+                        MessageBox.Show("Invalid option selected");
+                        break;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Kindly seelct an option");
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            commandParser.display(syntaxInput.Text);
+            commandParser.parseCommand(syntaxInput.Text);
         }
         private void input_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Enter)
             {
-                commandParser.display(syntaxInput.Text);
+                commandParser.parseCommand(syntaxInput.Text);
             }
         }
 
